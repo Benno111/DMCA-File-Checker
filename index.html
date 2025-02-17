@@ -23,9 +23,18 @@
     <p id="result"></p>
 
     <script>
-        const blacklistedFiles = ["copyrighted-movie.mp4", "pirated-song.mp3", "protected-document.pdf"];
+        async function fetchBlacklistedFiles() {
+            try {
+                const response = await fetch('https://api.publicapis.org/entries'); // Example public API
+                const data = await response.json();
+                return data.entries ? data.entries.map(entry => entry.API) : [];
+            } catch (error) {
+                console.error("Error fetching blacklist:", error);
+                return [];
+            }
+        }
 
-        function checkFile() {
+        async function checkFile() {
             const fileInput = document.getElementById('fileInput');
             const result = document.getElementById('result');
             
@@ -36,6 +45,7 @@
             }
             
             const fileName = fileInput.files[0].name;
+            const blacklistedFiles = await fetchBlacklistedFiles();
             
             if (blacklistedFiles.includes(fileName)) {
                 result.textContent = "Warning: This file is blacklisted due to DMCA restrictions.";
@@ -48,4 +58,3 @@
     </script>
 </body>
 </html>
-
