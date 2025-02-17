@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DMCA File Checker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        #result {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h2>DMCA File Checker</h2>
+    <input type="file" id="fileInput" />
+    <button onclick="checkFile()">Check File</button>
+    <p id="result"></p>
+
+    <script>
+        const blacklistedFiles = ["copyrighted-movie.mp4", "pirated-song.mp3", "protected-document.pdf"];
+
+        function checkFile() {
+            const fileInput = document.getElementById('fileInput');
+            const result = document.getElementById('result');
+            
+            if (fileInput.files.length === 0) {
+                result.textContent = "Please upload a file.";
+                result.style.color = "black";
+                return;
+            }
+            
+            const fileName = fileInput.files[0].name;
+            
+            if (blacklistedFiles.includes(fileName)) {
+                result.textContent = "Warning: This file is blacklisted due to DMCA restrictions.";
+                result.style.color = "red";
+            } else {
+                result.textContent = "This file is safe to upload.";
+                result.style.color = "green";
+            }
+        }
+    </script>
+</body>
+</html>
+
